@@ -1,15 +1,17 @@
 
-type RegexpParser<Re extends string> =
+type RegExParser<Re extends string> =
   Re extends `(?<${infer Key}>${infer Rest}`
-    ? { [k in Key]: string } & RegexpParser<Rest>
+    ? { [k in Key]: string } & RegExParser<Rest>
     : Re extends `${infer _Stuff}(?${infer Rest}`
-      ? Rest extends string ? RegexpParser<`(?${Rest}`> : never
+      ? Rest extends string ? RegExParser<`(?${Rest}`> : never
       : {};
 
-export const Regex = <Re extends string>(re: Re, flags: string = '') => {
+type RegExResult<Re extends string> = RegExParser<Re> | null;
+
+export const RegEx = <Re extends string>(re: Re, flags: string = '') => {
   const regexp = new RegExp(re, flags);
   return {
-    match: (str: string): RegexpParser<Re> => regexp.exec(str) as any,
+    match: (str: string) => regexp.exec(str)?.groups as unknown as RegExResult<Re>,
   };
 };
 
