@@ -1,10 +1,13 @@
 
-// TODO: Add support for optional captures
 // TODO: Alternate syntax inside names of capture groups to allow types?
 
 type RegExParser<RegexStr extends string> =
   RegexStr extends `(?<${infer Key}>${infer Rest}`
-    ? { [k in Key]: string } & RegExParser<Rest>
+    ? Rest extends `${infer _})${infer Rest}`
+      ? Rest extends `?${infer Rest}`
+        ? { [k in Key]?: string } & RegExParser<Rest>
+        : { [k in Key]: string } & RegExParser<Rest>
+      : { [k in Key]: string } & RegExParser<Rest>
     : RegexStr extends `${infer _}(?${infer Rest}`
       ? Rest extends string ? RegExParser<`(?${Rest}`> : never
       : {};
