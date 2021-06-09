@@ -1,15 +1,18 @@
 
-type RegExParser<Re extends string> =
-  Re extends `(?<${infer Key}>${infer Rest}`
+// TODO: Add support for optional captures
+// TODO: Alternate syntax inside names of capture groups to allow types?
+
+type RegExParser<RegexStr extends string> =
+  RegexStr extends `(?<${infer Key}>${infer Rest}`
     ? { [k in Key]: string } & RegExParser<Rest>
-    : Re extends `${infer _Stuff}(?${infer Rest}`
+    : RegexStr extends `${infer _}(?${infer Rest}`
       ? Rest extends string ? RegExParser<`(?${Rest}`> : never
       : {};
 
 type RegExResult<Re extends string> = RegExParser<Re> | null;
 
 class RegExT<Re extends string> {
-  regex : RegExp;
+  private regex : RegExp;
 
   constructor(re: Re, flags: string = '') {
     this.regex = new RegExp(re, flags);
