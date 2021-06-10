@@ -1,0 +1,7 @@
+.github/
+coverage/
+docs/
+src/
+tests/
+default.nix
+tsconfig.json
