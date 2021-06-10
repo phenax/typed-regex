@@ -1,8 +1,8 @@
-import { RegEx } from '../src/index';
+import { TypedRegEx } from '../src/index';
 
-describe('RegEx', () => {
+describe('TypedRegEx', () => {
   it('should extract year/month/day groups', () => {
-    const r = RegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$');
+    const r = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$');
     const result = r.match('2020-12-02');
     expect(result).not.toBeNull();
     expect(result?.year).toBe('2020');
@@ -11,7 +11,7 @@ describe('RegEx', () => {
   });
 
   it('should extract optional groups', () => {
-    const r = RegEx('foo(?<name>.*)?');
+    const r = TypedRegEx('foo(?<name>.*)?');
     const result = r.match('hello worldfoobar');
     expect(result).not.toBeNull();
     expect(result?.name).toBe('bar');
@@ -21,7 +21,7 @@ describe('RegEx', () => {
   });
 
   it('should extract 0 or more (*) applied on capture groups', () => {
-    const r = RegEx('^foo(?<name>\\w)*', 'gi');
+    const r = TypedRegEx('^foo(?<name>\\w)*', 'gi');
     const result = r.match('foobar');
     expect(result).not.toBeNull();
     expect(result?.name).toBe('r');

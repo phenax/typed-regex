@@ -16,7 +16,7 @@ type RegExParser<RegexStr extends string> =
 type RegExResult<Re extends string> = RegExParser<Re> | null;
 
 class RegExT<Re extends string> {
-  private regex : RegExp;
+  private regex: RegExp;
 
   constructor(re: Re, flags: string = '') {
     this.regex = new RegExp(re, flags);
@@ -27,6 +27,6 @@ class RegExT<Re extends string> {
   }
 }
 
-export const RegEx = <Re extends string>(re: Re, flags: string = '') =>
+export const TypedRegEx = <Re extends string>(re: Re, flags: string = '') =>
   new RegExT(re, flags);
 
