@@ -24,7 +24,7 @@ import { TypedRegEx } from 'typed-regex';
 const regex = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$', 'g');
 const result = regex.captures('2020-12-02');
 
-result // : null | { year: string, month: string, day: string }
+result // : undefined | { year: string, month: string, day: string }
 ```
 
 > NOTE: The regular expression has to be a string literal for the types to be valid
@@ -37,7 +37,7 @@ If the capture group is marked as optional in the regular expression, the genera
 const regex = TypedRegEx('(?<first>\\d+)/(?<second>\\w+)?', 'g');
 const result = regex.captures('1234/foobar');
 
-result // : null | { first: string, second?: string }
+result // : undefined | { first: string, second?: string }
 ```
 
 
