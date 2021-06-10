@@ -2,15 +2,17 @@
   "name": "typed-regex",
   "version": "0.0.0",
   "description": "++",
-  "main": "index.js",
-  "repository": "__",
+  "main": "dist/lib/index.js",
+  "types": "dist/types/index.d.ts",
+  "repository": "https://github.com/phenax/typed-regex",
   "author": "Akshay Nair <phenax5@gmail.com>",
   "license": "MIT",
+  "keywords": ["regex", "type-safe", "typescript"],
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs",
     "test": "jest",
-    "test:cov": "jest --coverage"
+    "test:ci": "jest --coverage"
   },
   "jest": {
     "transform": {
@@ -18,11 +20,7 @@
     },
     "testEnvironment": "node",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
+    "moduleFileExtensions": [ "js", "ts", "tsx" ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/test/"
@@ -30,14 +28,12 @@
     "coverageThreshold": {
       "global": {
         "branches": 90,
-        "functions": 95,
-        "lines": 95,
-        "statements": 95
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
       }
     },
-    "collectCoverageFrom": [
-      "src/*.{js,ts}"
-    ]
+    "collectCoverageFrom": [ "src/*.ts" ]
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
