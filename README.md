@@ -22,7 +22,7 @@ The type of the result object is infered from the regular expression.
 import { TypedRegEx } from 'typed-regex';
 
 const regex = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$', 'g');
-const result = regex.match('2020-12-02');
+const result = regex.captures('2020-12-02');
 
 result // : null | { year: string, month: string, day: string }
 ```
