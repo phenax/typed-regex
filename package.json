@@ -20,6 +20,31 @@
     "test": "jest",
     "test:ci": "jest --coverage"
   },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.2",
+    "jest": "^27.0.4",
+    "release-it": "^14.8.0",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.2"
+  },
+  "release-it": {
+    "git": {
+      "requireCleanWorkingDir": true,
+      "requireUpstream": true,
+      "requireCommits": false,
+      "commit": true,
+      "commitMessage": "Release ${version}",
+      "tag": true,
+      "tagAnnotation": "Release ${version}",
+      "push": true,
+      "pushArgs": ["--follow-tags"]
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true
+    }
+  },
   "jest": {
     "transform": {
       ".(ts|tsx)": "ts-jest"
@@ -46,13 +71,5 @@
     "collectCoverageFrom": [
       "src/*.ts"
     ]
-  },
-  "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.2",
-    "jest": "^27.0.4",
-    "release-it": "^14.8.0",
-    "ts-jest": "^27.0.3",
-    "typescript": "^4.3.2"
   }
 }
