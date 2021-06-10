@@ -1,12 +1,12 @@
 # typed-regex
 A typescript library for writing type-safe regular expression matching using named capture groups
 
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/typed-regex)](https://www.npmjs.com/package/typed-regex)
 [![npm](https://img.shields.io/npm/v/typed-regex)](https://www.npmjs.com/package/typed-regex)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/typed-regex)](https://www.npmjs.com/package/typed-regex)
 
 
 
-### Install
+## Install
 To install the latest stable version of typed-regex -
 ```
 yarn add typed-regex
@@ -15,7 +15,7 @@ npm install --save typed-regex
 ```
 
 
-### Usage
+## Usage
 The type of the result object is infered from the regular expression
 
 ```ts
@@ -39,11 +39,11 @@ result // : null | { first: string, second?: string }
 ```
 
 
-### Browser support
+## Browser support
 Named capture groups are supported in [these browser](https://caniuse.com/mdn-javascript_builtins_regexp_named_capture_groups)
 
 
 
-### License
+## License
 Typed-Regex is licensed under [MIT](./LICENSE)
 
