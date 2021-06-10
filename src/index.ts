@@ -4,7 +4,7 @@
 type RegExParser<RegexStr extends string> =
   RegexStr extends `(?<${infer Key}>${infer Rest}`
     ? Rest extends `${infer _})${infer Rest}`
-      ? Rest extends `?${infer Rest}`
+      ? Rest extends `?${infer Rest}` | `*${infer Rest}`
         ? { [k in Key]?: string } & RegExParser<Rest>
         : { [k in Key]: string } & RegExParser<Rest>
       : { [k in Key]: string } & RegExParser<Rest>
