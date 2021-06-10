@@ -9,7 +9,6 @@
   "license": "MIT",
   "keywords": ["regex", "type-safe", "typescript"],
   "scripts": {
-    "prebuild": "rimraf dist",
     "build": "tsc --module commonjs",
     "test": "jest",
     "test:ci": "jest --coverage"
