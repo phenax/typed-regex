@@ -1,9 +1,8 @@
 
 // TODO: Alternate syntax inside names of capture groups to allow types?
 // TODO: (bug) nested * is not set as optional
-// TODO: Add exec -> { groups: Res, raw: RawResults }
-// TODO: Add test method
 // TODO: Create some parse errors in invalid cases
+// TODO: Parser for flags
 
 export type RegExCaptureResult<RegexStr extends string> =
   RegexStr extends `(?<${infer Key}>${infer Rest}`
@@ -16,18 +15,35 @@ export type RegExCaptureResult<RegexStr extends string> =
       ? Rest extends string ? RegExCaptureResult<`(?${Rest}`> : never
       : {};
 
-class RegExT<Re extends string> {
+export type RegExExecResult<Re extends string> = {
+  matched: boolean;
+  groups?: RegExCaptureResult<Re>;
+  raw?: RegExpExecArray;
+};
+
+export class TypedRegExT<Re extends string> {
   private regex: RegExp;
 
   constructor(re: Re, flags: string = '') {
     this.regex = new RegExp(re, flags);
   }
+
+  isMatch = (str: string): boolean => this.regex.test(str);
   
-  match(str: string) {
-    return this.regex.exec(str)?.groups as unknown as (RegExCaptureResult<Re> | null);
+  match = (str: string): RegExExecResult<Re> => {
+    const rawResult = this.regex.exec(str);
+
+    return {
+      matched: !!rawResult,
+      groups: (rawResult?.groups || undefined) as any,
+      raw: rawResult || undefined,
+    };
   }
+
+  captures = (str: string): RegExCaptureResult<Re> | undefined =>
+    this.match(str).groups;
 }
 
 export const TypedRegEx = <Re extends string>(re: Re, flags: string = '') =>
-  new RegExT(re, flags);
+  new TypedRegExT(re, flags);
 
