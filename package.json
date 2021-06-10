@@ -1,6 +1,6 @@
 {
   "name": "typed-regex",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A typescript library for writing type-safe regular expressions using named capture groups",
   "main": "dist/lib/index.js",
   "types": "dist/types/index.d.ts",
@@ -38,7 +38,9 @@
       "tag": true,
       "tagAnnotation": "Release ${version}",
       "push": true,
-      "pushArgs": ["--follow-tags"]
+      "pushArgs": [
+        "--follow-tags"
+      ]
     },
     "npm": {
       "publish": true,
