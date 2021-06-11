@@ -1,9 +1,6 @@
 # API docs
 
 
-===
-
-
 ## Example
 
 ```ts
@@ -16,7 +13,7 @@ const isMatch = regex.isMatch('2020-12-02'); // : boolean
 ```
 
 
-===
+---
 
 
 ## Exports
@@ -38,7 +35,7 @@ const regex = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$', 'g
 ```
 
 
-===
+---
 
 
 ## Methods
@@ -113,7 +110,7 @@ expect({ ...result, raw: [...(result.raw || [])] }).toEqual({
 ```
 
 
-===
+---
 
 
 ## Types
