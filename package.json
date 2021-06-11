@@ -1,6 +1,6 @@
 {
   "name": "typed-regex",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A typescript library for writing type-safe regular expressions using named capture groups",
   "main": "dist/lib/index.js",
   "types": "dist/types/index.d.ts",
