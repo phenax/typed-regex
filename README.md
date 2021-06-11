@@ -41,6 +41,10 @@ result // : undefined | { first: string, second?: string }
 ```
 
 
+#### API Docs
+[You can find more information about the library in the API documentation](https://github.com/phenax/typed-regex/blob/main/docs/API.md)
+
+
 ## Browser support
 Named capture groups are supported in [these browser](https://caniuse.com/mdn-javascript_builtins_regexp_named_capture_groups)
 

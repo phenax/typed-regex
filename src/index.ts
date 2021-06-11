@@ -23,7 +23,7 @@ export type RegExCaptureResult<Re extends string> =
       ? RegExCaptureResult<`(?${rest}`>
       : {};
 
-export type RegExExecResult<Re extends string> = {
+export type RegExMatchResult<Re extends string> = {
   matched: boolean;
   groups?: RegExCaptureResult<Re>;
   raw?: RegExpExecArray;
@@ -38,7 +38,7 @@ export class TypedRegExT<Re extends string> {
 
   isMatch = (str: string): boolean => this.regex.test(str);
 
-  match = (str: string): RegExExecResult<Re> => {
+  match = (str: string): RegExMatchResult<Re> => {
     const rawResult = this.regex.exec(str);
 
     return {
@@ -54,5 +54,5 @@ export class TypedRegExT<Re extends string> {
 
 export const TypedRegEx = <Re extends string, Fl extends string>(
   re: Re,
-  flags?: Fl & FlagChecker<Fl>
+  flags?: FlagChecker<Fl> & Fl
 ) => new TypedRegExT(re, flags);

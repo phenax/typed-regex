@@ -41,9 +41,9 @@ describe('TypedRegEx', () => {
     it('should extract year/month/day groups', () => {
       const r = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$');
       const result = r.match('2020-12-02');
-      expect([...(result.raw || [])]).toEqual(["2020-12-02", "2020", "12", "02"]);
-      expect({ ...result, raw: undefined }).toEqual({
+      expect({ ...result, raw: [...(result.raw || [])] }).toEqual({
         matched: true,
+        raw: ["2020-12-02", "2020", "12", "02"],
         groups: {
           year: '2020',
           month: '12',
