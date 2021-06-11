@@ -1,28 +1,27 @@
 // TODO: Alternate syntax inside names of capture groups to allow types?
 // TODO: (bug) nested * is not set as optional
 // TODO: Create some parse errors in invalid cases
+// TODO: Parse normal captures in a typed tuple?
 
-type Flags = "d" | "g" | "i" | "m" | "s" | "u" | "y";
+type Flag = 'd' | 'g' | 'i' | 'm' | 's' | 'u' | 'y';
 
-export type FlagChecker<FlagsStr extends string> =
-  FlagsStr extends `${Flags}${infer FlagsStr}`
-    ? FlagChecker<FlagsStr>
-    : FlagsStr extends ""
-    ? string
-    : never;
+type FlagChecker<Fl extends string> =
+  Fl extends '' ? string
+  : Fl extends `${Flag}${infer rest}` ? FlagChecker<rest>
+  : never;
 
 export type RegExCaptureResult<RegexStr extends string> =
-  RegexStr extends `(?<${infer Key}>${infer Rest}`
-    ? Rest extends `${infer _})${infer Rest}`
-      ? Rest extends `?${infer Rest}` | `*${infer Rest}`
-        ? { [k in Key]?: string } & RegExCaptureResult<Rest>
-        : { [k in Key]: string } & RegExCaptureResult<Rest>
-      : { [k in Key]: string } & RegExCaptureResult<Rest> // This should be an error
-    : RegexStr extends `${infer _}(?${infer Rest}`
-    ? Rest extends string
-      ? RegExCaptureResult<`(?${Rest}`>
-      : never
-    : {};
+  RegexStr extends `(?<${infer key}>${infer rest}`
+    ? rest extends `${infer _})${infer rest}`
+      ? rest extends `?${infer rest}` | `*${infer rest}`
+        ? { [k in key]?: string } & RegExCaptureResult<rest>
+        : { [k in key]: string } & RegExCaptureResult<rest>
+      : { [k in key]: string } & RegExCaptureResult<rest> // This should be an error
+    : RegexStr extends `${infer _}(?${infer rest}`
+      ? rest extends string
+        ? RegExCaptureResult<`(?${rest}`>
+        : never
+      : {};
 
 export type RegExExecResult<Re extends string> = {
   matched: boolean;
@@ -33,7 +32,7 @@ export type RegExExecResult<Re extends string> = {
 export class TypedRegExT<Re extends string> {
   private regex: RegExp;
 
-  constructor(re: Re, flags: string = "") {
+  constructor(re: Re, flags: string = '') {
     this.regex = new RegExp(re, flags);
   }
 
@@ -53,7 +52,7 @@ export class TypedRegExT<Re extends string> {
     this.match(str).groups;
 }
 
-export const TypedRegEx = <Re extends string, FlagsStr extends string>(
+export const TypedRegEx = <Re extends string, Fl extends string>(
   re: Re,
-  flags?: FlagsStr & FlagChecker<FlagsStr>
+  flags?: Fl & FlagChecker<Fl>
 ) => new TypedRegExT(re, flags);
