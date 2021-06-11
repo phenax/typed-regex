@@ -3,24 +3,24 @@
 // TODO: Create some parse errors in invalid cases
 // TODO: Parse normal captures in a typed tuple?
 
+type ReError<T extends string> = { type: T };
+
 type Flag = 'd' | 'g' | 'i' | 'm' | 's' | 'u' | 'y';
 
 type FlagChecker<Fl extends string> =
   Fl extends '' ? string
   : Fl extends `${Flag}${infer rest}` ? FlagChecker<rest>
-  : never;
+  : ReError<`Invalid flag used: ${Fl}`>;
 
-export type RegExCaptureResult<RegexStr extends string> =
-  RegexStr extends `(?<${infer key}>${infer rest}`
+export type RegExCaptureResult<Re extends string> =
+  Re extends `(?<${infer key}>${infer rest}`
     ? rest extends `${infer _})${infer rest}`
       ? rest extends `?${infer rest}` | `*${infer rest}`
         ? { [k in key]?: string } & RegExCaptureResult<rest>
         : { [k in key]: string } & RegExCaptureResult<rest>
-      : { [k in key]: string } & RegExCaptureResult<rest> // This should be an error
-    : RegexStr extends `${infer _}(?${infer rest}`
-      ? rest extends string
-        ? RegExCaptureResult<`(?${rest}`>
-        : never
+      : never
+    : Re extends `${infer _}(?${infer rest}`
+      ? RegExCaptureResult<`(?${rest}`>
       : {};
 
 export type RegExExecResult<Re extends string> = {

@@ -27,13 +27,6 @@ describe('TypedRegEx', () => {
       expect(result).not.toBeNull();
       expect(result?.name).toBe('r');
     });
-
-    xit('should extract 0 or more (*) applied on capture groups', () => {
-      const r = TypedRegEx('^foo(?<name>\\w)(?<num>.*', 'gi');
-      const result = r.captures('foobar');
-      expect(result).not.toBeNull();
-      expect(result?.name).toBe('r');
-    });
   });
 
   describe('#test', () => {
