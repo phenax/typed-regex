@@ -27,8 +27,13 @@ export type RegExCaptureResult<Re extends string> =
 export type RegExMatchResult<Re extends string> = {
   matched: boolean;
   groups?: RegExCaptureResult<Re>;
-  raw?: RegExpMatchArray;
+  raw?: RegExpExecArray;
 };
+
+export type RegExMatchAllResult<Re extends string> = Array<{
+  groups?: RegExCaptureResult<Re>;
+  raw: RegExpMatchArray;
+}>
 
 export class TypedRegExT<Re extends string> {
   private _regexString: Re;
@@ -45,18 +50,21 @@ export class TypedRegExT<Re extends string> {
 
   isMatch = (str: string): boolean => this.getRegex().test(str);
 
-  private _toMatchResult = (raw: RegExpMatchArray | null): RegExMatchResult<Re> => ({
-    matched: !!raw,
-    groups: raw?.groups as any,
-    raw: raw || undefined,
-  });
+  match = (str: string): RegExMatchResult<Re> => {
+    const raw = this.getRegex().exec(str);
+    return {
+      matched: !!raw,
+      groups: raw?.groups as any,
+      raw: raw || undefined,
+    };
+  };
 
-  match = (str: string): RegExMatchResult<Re> =>
-     this._toMatchResult(this.getRegex().exec(str));
-
-  matchAll = (str: string): Array<RegExMatchResult<Re>> => {
+  matchAll = (str: string): RegExMatchAllResult<Re> => {
     const re = this.getRegex();
-    return Array.from(str.matchAll(re)).map(this._toMatchResult);
+    return Array.from(str.matchAll(re)).map((raw: RegExpMatchArray) => ({
+      groups: raw.groups as any,
+      raw,
+    }));
   };
 
   captures = (str: string): RegExCaptureResult<Re> | undefined =>

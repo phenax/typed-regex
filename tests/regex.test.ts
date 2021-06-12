@@ -50,14 +50,6 @@ describe('TypedRegEx', () => {
     });
   });
 
-  describe('#isMatch', () => {
-    it('should check if pattern matches year/month/day', () => {
-      const r = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$');
-      expect(r.isMatch('2020-12-02')).toBe(true);
-      expect(r.isMatch('2020-12')).toBe(false);
-    });
-  });
-
   describe('#match', () => {
     const dataRegex = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$');
 
@@ -88,15 +80,12 @@ describe('TypedRegEx', () => {
       // skips raw value testing
       expect(result.map(r => ({ ...r, raw: undefined }))).toEqual([
         {
-          matched: true,
           groups: { firstName: 'Joe', lastName: 'Mama' },
         },
         {
-          matched: true,
           groups: { firstName: 'Ligma', lastName: 'Bolz' }
         },
         {
-          matched: true,
           groups: { firstName: 'Sir', middleName: 'Prising', lastName: 'Lee' }
         },
       ]);
@@ -110,6 +99,16 @@ describe('TypedRegEx', () => {
       expect(namesRegex.matchAll('')).toEqual([]);
     });
   });
+
+
+  describe('#isMatch', () => {
+    it('should check if pattern matches year/month/day', () => {
+      const r = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$');
+      expect(r.isMatch('2020-12-02')).toBe(true);
+      expect(r.isMatch('2020-12')).toBe(false);
+    });
+  });
+
 
   describe('flags', () => {
     it('should allow all allowed flags', () => {
