@@ -59,5 +59,15 @@ describe('TypedRegEx', () => {
       expect(result).toEqual({ matched: false });
     });
   });
+
+  describe('bugs', () => {
+    it('should non yield ts type error on using non-capturing groups', () => {
+      // https://github.com/phenax/typed-regex/issues/1
+      const r = TypedRegEx('^foo(?:\\w)(?<name>.*)$');
+      const result = r.captures('foobar');
+      expect(result).not.toBeNull();
+      expect(result?.name).toBe('ar');
+    });
+  });
 });
 

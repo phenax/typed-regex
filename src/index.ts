@@ -2,6 +2,7 @@
 // TODO: (bug) nested * is not set as optional
 // TODO: Create some parse errors in invalid cases
 // TODO: Parse normal captures in a typed tuple?
+// TODO: Ignore non-capturing groups
 
 type ReError<T extends string> = { type: T };
 
@@ -19,8 +20,8 @@ export type RegExCaptureResult<Re extends string> =
         ? { [k in key]?: string } & RegExCaptureResult<rest>
         : { [k in key]: string } & RegExCaptureResult<rest>
       : never
-    : Re extends `${infer _}(?${infer rest}`
-      ? RegExCaptureResult<`(?${rest}`>
+    : Re extends `${infer _}(?<${infer rest}`
+      ? RegExCaptureResult<`(?<${rest}`>
       : {};
 
 export type RegExMatchResult<Re extends string> = {
