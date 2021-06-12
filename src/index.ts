@@ -6,6 +6,7 @@
 
 type ReError<T extends string> = { type: T };
 
+// Ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp
 type Flag = 'd' | 'g' | 'i' | 'm' | 's' | 'u' | 'y';
 
 type FlagChecker<Fl extends string> =

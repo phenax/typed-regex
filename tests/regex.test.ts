@@ -60,6 +60,12 @@ describe('TypedRegEx', () => {
     });
   });
 
+  describe('flags', () => {
+    it('should allow all allowed flags', () => {
+      TypedRegEx('^foo(?<name>\\w)*', 'gimsuy'); // `d` unused as it throws a runtime error
+    });
+  });
+
   describe('bugs', () => {
     it('should non yield ts type error on using non-capturing groups', () => {
       // https://github.com/phenax/typed-regex/issues/1
