@@ -3,7 +3,7 @@
     "moduleResolution": "node",
     "target": "es5",
     "module":"es2015",
-    "lib": ["es2018"],
+    "lib": ["es2020"],
     "strict": true,
     "sourceMap": true,
     "declaration": true,
