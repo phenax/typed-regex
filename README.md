@@ -1,6 +1,7 @@
 # typed-regex
 A typescript library for writing type-safe regular expressions using [named capture groups](https://github.com/tc39/proposal-regexp-named-groups).
 
+![GitHub Workflow Status (main)](https://img.shields.io/github/workflow/status/phenax/typed-regex/Node.js%20CI/main)
 [![npm](https://img.shields.io/npm/v/typed-regex)](https://www.npmjs.com/package/typed-regex)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/typed-regex)](https://www.npmjs.com/package/typed-regex)
 
