@@ -27,7 +27,7 @@ TypedRegEx<Re extends string, Fl extends string>
 ```
 
 * `regex`: (Eg - `(?<name>\\w+)`) Regular expression as a string literal. The capture groups in the regex are used to construct the type.
-* `flags`: (Eg - `gmi`) [RegExp flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags) as a string literal. The flags are type checked so any invalid flag characters will result in an typescript error.
+* `flags`: (Eg - `gmi`) [RegExp flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags) as a string literal. The flags are type checked so any invalid flag characters will result in a typescript error.
 
 Example -
 ```ts
@@ -41,7 +41,7 @@ const regex = TypedRegEx('^(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})$', 'g
 ## Methods
 
 #### `captures`
-Extract the typed capture groups from the regular expression
+Extract the typed capture groups from the regular expression.
 Returns capture groups of type [RegExCaptureResult](#RegExCaptureResult).
 
 **Signature -**
@@ -62,7 +62,7 @@ expect(result?.day).toBe('02');
 
 
 #### `captureAll`
-Extract all the capture groups from the regular expression as an array of typed results
+Extract all the capture groups from the regular expression as an array of typed results.
 Returns the an array of typed capture groups of type Array<[RegExCaptureResult](#RegExCaptureResult)>.
 
 **Signature -**
@@ -112,7 +112,7 @@ expect(result).toEqual({
 
 
 #### `matchAll`
-Equivalent to [`String#matchAll`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll). Returns a list of matched results with typed capture groups
+Equivalent to [`String#matchAll`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll). Returns a list of matched results with typed capture groups.
 Returns the an array of matched result with typed capture groups of type [RegExMatchAllResult](#RegExMatchAllResult).
 
 **Signature -**
@@ -144,7 +144,7 @@ expect(result).toEqual([
 
 
 #### `isMatch`
-Check if a string matches regex (Equivalent to [`RegExp#test`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test))
+Check if a string matches regex (Equivalent to [`RegExp#test`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test)).
 
 **Signature -**
 ```ts
