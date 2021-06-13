@@ -14,15 +14,17 @@ type FlagChecker<Fl extends string> =
   : ReError<`Invalid flag used: ${Fl}`>;
 
 export type RegExCaptureResult<Re extends string> =
-  Re extends `(?<${infer key}>${infer rest}`
-    ? rest extends `${infer _})${infer rest}`
-      ? rest extends `?${infer rest}` | `*${infer rest}`
-        ? { [k in key]?: string } & RegExCaptureResult<rest>
-        : { [k in key]: string } & RegExCaptureResult<rest>
-      : never
-    : Re extends `${infer _}(?<${infer rest}`
-      ? RegExCaptureResult<`(?<${rest}`>
-      : {};
+  Re extends ''
+    ? {}
+    : Re extends `(?<${infer key}>${infer rest}`
+      ? rest extends `${infer _})${infer rest}`
+        ? rest extends `?${infer rest}` | `*${infer rest}`
+          ? { [k in key]?: string } & RegExCaptureResult<rest>
+          : { [k in key]: string } & RegExCaptureResult<rest>
+        : never
+      : Re extends `${infer _}(?<${infer rest}`
+        ? RegExCaptureResult<`(?<${rest}`>
+        : {};
 
 export type RegExMatchResult<Re extends string> = {
   matched: boolean;
@@ -71,7 +73,7 @@ export class TypedRegExT<Re extends string> {
     this.match(str).groups;
 
   captureAll = (str: string): Array<RegExCaptureResult<Re> | undefined> =>
-    this.matchAll(str).map(r => r.groups);
+    (this.matchAll(str) as any).map((r: any) => r.groups);
 }
 
 export const TypedRegEx = <Re extends string, Fl extends string>(
