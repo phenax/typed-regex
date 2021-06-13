@@ -33,11 +33,11 @@ describe('TypedRegEx', () => {
     const namesRegex = TypedRegEx('((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+', 'g');
 
     it('should capture all names in string', () => {
-      const result = namesRegex.captureAll('Joe  Mama,Ligma  Bolz,Sir Prising Lee');
+      const result = namesRegex.captureAll('Joe  Mama,Ligma  Bolz,Sir Prysing Lee');
       expect(result).toEqual([
         { firstName: 'Joe', lastName: 'Mama' },
         { firstName: 'Ligma', lastName: 'Bolz' },
-        { firstName: 'Sir', middleName: 'Prising', lastName: 'Lee' },
+        { firstName: 'Sir', middleName: 'Prysing', lastName: 'Lee' },
       ]);
     });
 
@@ -76,7 +76,7 @@ describe('TypedRegEx', () => {
     const namesRegex = TypedRegEx('((?<firstName>\\w+) (?<middleName>\\w+)? (?<lastName>\\w+))+', 'g');
 
     it('should capture all names in string', () => {
-      const result = namesRegex.matchAll('Joe  Mama,Ligma  Bolz,Sir Prising Lee');
+      const result = namesRegex.matchAll('Joe  Mama,Ligma  Bolz,Sir Prysing Lee');
       // skips raw value testing
       expect(result.map(r => ({ ...r, raw: undefined }))).toEqual([
         {
@@ -86,7 +86,7 @@ describe('TypedRegEx', () => {
           groups: { firstName: 'Ligma', lastName: 'Bolz' }
         },
         {
-          groups: { firstName: 'Sir', middleName: 'Prising', lastName: 'Lee' }
+          groups: { firstName: 'Sir', middleName: 'Prysing', lastName: 'Lee' }
         },
       ]);
     });
