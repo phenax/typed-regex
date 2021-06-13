@@ -1,4 +1,3 @@
-// TODO: Alternate syntax inside names of capture groups to allow types?
 // TODO: (bug) nested * is not set as optional
 // TODO: Create some parse errors in invalid cases
 // TODO: Parse normal captures in a typed tuple?
@@ -31,27 +30,48 @@ export type RegExMatchResult<Re extends string> = {
   raw?: RegExpExecArray;
 };
 
-export class TypedRegExT<Re extends string> {
-  private regex: RegExp;
+export type RegExMatchAllResult<Re extends string> = Array<{
+  groups?: RegExCaptureResult<Re>;
+  raw: RegExpMatchArray;
+}>
 
-  constructor(re: Re, flags: string = '') {
-    this.regex = new RegExp(re, flags);
+export class TypedRegExT<Re extends string> {
+  private _regexString: Re;
+  private _flags: string;
+
+  private getRegex(): RegExp {
+    return new RegExp(this._regexString, this._flags);
   }
 
-  isMatch = (str: string): boolean => this.regex.test(str);
+  constructor(re: Re, flags: string = '') {
+    this._regexString = re;
+    this._flags = flags;
+  }
+
+  isMatch = (str: string): boolean => this.getRegex().test(str);
 
   match = (str: string): RegExMatchResult<Re> => {
-    const rawResult = this.regex.exec(str);
-
+    const raw = this.getRegex().exec(str);
     return {
-      matched: !!rawResult,
-      groups: (rawResult?.groups || undefined) as any,
-      raw: rawResult || undefined,
+      matched: !!raw,
+      groups: raw?.groups as any,
+      raw: raw || undefined,
     };
+  };
+
+  matchAll = (str: string): RegExMatchAllResult<Re> => {
+    const re = this.getRegex();
+    return Array.from(str.matchAll(re)).map((raw: RegExpMatchArray) => ({
+      groups: raw.groups as any,
+      raw,
+    }));
   };
 
   captures = (str: string): RegExCaptureResult<Re> | undefined =>
     this.match(str).groups;
+
+  captureAll = (str: string): Array<RegExCaptureResult<Re> | undefined> =>
+    this.matchAll(str).map(r => r.groups);
 }
 
 export const TypedRegEx = <Re extends string, Fl extends string>(
