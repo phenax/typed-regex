@@ -47,7 +47,7 @@ result // : undefined | { first: string, second?: string }
 
 
 ## Browser support
-Named capture groups are supported in [these browser](https://caniuse.com/mdn-javascript_builtins_regexp_named_capture_groups)
+Named capture groups are supported in [these browsers](https://caniuse.com/mdn-javascript_builtins_regexp_named_capture_groups)
 
 
 
