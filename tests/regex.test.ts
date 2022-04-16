@@ -1,5 +1,8 @@
 import { TypedRegEx } from '../src/index';
 
+type Equals<A, B> = [A] extends [B] ? [B] extends [A] ? true : false : false;
+const assert_type = <T extends true>() => true as T;
+
 describe('TypedRegEx', () => {
   describe('#captures', () => {
     it('should extract year/month/day groups', () => {
@@ -9,6 +12,8 @@ describe('TypedRegEx', () => {
       expect(result?.year).toBe('2020');
       expect(result?.month).toBe('12');
       expect(result?.day).toBe('02');
+
+      assert_type<Equals<typeof result, undefined | { year: string, month: string, day: string }>>();
     });
 
     it('should extract optional groups', () => {
@@ -16,6 +21,8 @@ describe('TypedRegEx', () => {
       const result = r.captures('hello worldfoobar');
       expect(result).not.toBeNull();
       expect(result?.name).toBe('bar');
+
+      assert_type<Equals<typeof result, undefined | { name?: string }>>();
 
       // no match case
       expect(r.captures('hello world')?.name).toBeUndefined();
@@ -26,6 +33,17 @@ describe('TypedRegEx', () => {
       const result = r.captures('foobar');
       expect(result).not.toBeNull();
       expect(result?.name).toBe('r');
+
+      assert_type<Equals<typeof result, undefined | { name?: string }>>();
+    });
+
+    it('should check for nested groups', () => {
+      const r = TypedRegEx("^\\w+(@(?<version>[a-z0-9-_.]+))?$", "gi");
+      const result = r.captures('word@0.1.2');
+      expect(result).not.toBeNull();
+      expect(result?.version).toBe('0.1.2');
+
+      assert_type<Equals<typeof result, undefined | { version?: string }>>();
     });
   });
 
@@ -64,11 +82,15 @@ describe('TypedRegEx', () => {
           day: '02',
         },
       });
+
+      assert_type<Equals<typeof result.groups, undefined | { year: string, month: string, day: string }>>()
     });
 
     it('should return matched: false if string doesnt match pattern', () => {
       const result = dataRegex.match('2020-12');
       expect(result).toEqual({ matched: false });
+
+      assert_type<Equals<typeof result.groups, undefined | { year: string, month: string, day: string }>>()
     });
   });
 
@@ -123,6 +145,8 @@ describe('TypedRegEx', () => {
       const result = r.captures('foobar');
       expect(result).not.toBeNull();
       expect(result?.name).toBe('ar');
+
+      assert_type<Equals<typeof result, undefined | { name: string }>>();
     });
   });
 });

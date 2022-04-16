@@ -22,9 +22,13 @@ export type RegExCaptureResult<Re extends string> =
           ? { [k in key]?: string } & RegExCaptureResult<rest>
           : { [k in key]: string } & RegExCaptureResult<rest>
         : never
-      : Re extends `${infer _}(?<${infer rest}`
-        ? RegExCaptureResult<`(?<${rest}`>
-        : {};
+      : Re extends `(${infer group})?${infer rest}` | `(${infer group})*${infer rest}`
+        ? Partial<RegExCaptureResult<group>> & RegExCaptureResult<rest>
+        : Re extends `${infer _}(?:${infer _})${infer rest}`
+          ? RegExCaptureResult<rest>
+          : Re extends `${infer _}(${infer rest}`
+            ? RegExCaptureResult<`(${rest}`>
+            : {};
 
 export type RegExMatchResult<Re extends string> = {
   matched: boolean;
