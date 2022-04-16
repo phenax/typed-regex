@@ -28,8 +28,8 @@ describe('TypedRegEx', () => {
       expect(result?.name).toBe('r');
     });
 
-    it('should do stuff', () => {
-      const r = TypedRegEx('((?<val>\\w+))?', 'gi');
+    it('should check for nested groups', () => {
+      const r = TypedRegEx("^\\w+(@(?<version>[a-z0-9-_.]+))?$", "gi");
       const result = r.captures('word');
       console.log(result);
     });
