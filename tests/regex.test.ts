@@ -146,7 +146,7 @@ describe('TypedRegEx', () => {
       expect(result).not.toBeNull();
       expect(result?.name).toBe('ar');
 
-      // assert_type<Equals<typeof result, { name?: string }>>();
+      assert_type<Equals<typeof result, undefined | { name: string }>>();
     });
   });
 });

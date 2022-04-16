@@ -24,9 +24,11 @@ export type RegExCaptureResult<Re extends string> =
         : never
       : Re extends `(${infer group})?${infer rest}` | `(${infer group})*${infer rest}`
         ? Partial<RegExCaptureResult<group>> & RegExCaptureResult<rest>
-        : Re extends `${infer _}(${infer rest}`
-          ? RegExCaptureResult<`(${rest}`>
-          : {};
+        : Re extends `${infer _}(?:${infer _})${infer rest}`
+          ? RegExCaptureResult<rest>
+          : Re extends `${infer _}(${infer rest}`
+            ? RegExCaptureResult<`(${rest}`>
+            : {};
 
 export type RegExMatchResult<Re extends string> = {
   matched: boolean;
